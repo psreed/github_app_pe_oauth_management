@@ -17,7 +17,7 @@ Create a GitHub App for your organization, then use these scripts to manage the 
 
 2. Use `2_exchange_code_for_token.py` to get an actual OAuth token for use with Puppet Enterprise Code Manager. By default, the functions in this script will ensure that user/group is set to `pe-puppet`, which is required for Code Manager to be able to read the OAuth token from the file. As a result, if you are testing this on a system without Puppet Enterprise installed, you may need to change those defaults in your `ghpe_finctions.py` file for the `write_token_to_file` function.
 
-3. Use `3_check_token.py` to show information about the current token. This is for information about the current token only, and is a required part of the authentication or code deployment workflow.
+3. Use `3_check_token.py` to show information about the current token. This is for information about the current token only, and is not a required part of the authentication or code deployment workflow.
 
 4. Use `4_check_refresh_needed.py` to determine if we are within the `refresh_threshold` and should refresh the token. The script will return an exit code of `1` if we are within the refresh threshhold and `0` if we are still outide of that time. By default, this threshold is set for within 4hrs of token exipry and is defined in `config.json` in number of seconds [14400]. GitHub tokens typically expire in 8hrs [28800 seconds] and 4hrs [14400 seconds] seems like a reasonable refresh time.
 
