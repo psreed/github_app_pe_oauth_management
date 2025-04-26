@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+"""
+Step 2 in the GitHub App Puppet Enterprise Token Authentication workflow
+
+Use the provided `code` to obtain a GitHub Access Token
+"""
+from ghpe_functions import *
+import time
+import math
+
+if check_sudo_needed():
+    print("Please use sudo to run this script.")
+    exit()
+
+config = load_config()
+
+code = input('Input Code: ')
+
+json_data = get_github_authorization(code, config)
+token = json_data.get('access_token')
+refresh_token = json_data.get('refresh_token')
+expiry = int(json_data.get('expires_in')) + math.trunc(time.time())
+
+print(f'Access Token: {token}')
+print(f'Expiry: {str(expiry)}')
+print(f'Refresh Token: {refresh_token}')
+
+print(f"Saving token to file: {config['token_file']}")
+write_token_to_file(token, config['token_file'])
+
+print(f"Saving expiry to file: {config['token_expiry_file']}")
+write_token_to_file(str(expiry), config['token_expiry_file'])
+
+print(f"Saving refresh token to file: {config['refresh_token_file']}")
+write_token_to_file(refresh_token, config['refresh_token_file'])

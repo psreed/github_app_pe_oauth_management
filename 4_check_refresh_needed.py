@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+"""
+Step 4 in the GitHub App Puppet Enterprise Token Authentication workflow
+
+Check expiry time and see if we're within the needed threshold
+
+"""
+from ghpe_functions import *
+import json
+import time
+import math
+import datetime
+
+if check_sudo_needed():
+    print("Please use sudo to run this script.")
+    exit()
+
+config = load_config()
+
+current_time=math.trunc(time.time())
+
+try:
+    with open(config['token_expiry_file']) as ef:
+        expiry_time = int(ef.read())
+except:
+    print("Could not read expiry file.")
+    exit()
+
+tte = expiry_time - current_time
+if tte < config['refresh_threshold']:
+    refresh_needed = True
+else:
+    refresh_needed = False
+
+c_datetime = datetime.datetime.fromtimestamp(current_time, datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+e_datetime = datetime.datetime.fromtimestamp(expiry_time, datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+
+print(f"Current Time          : {current_time} [{c_datetime} UTC]")
+print(f"Expiry Time           : {expiry_time} [{e_datetime} UTC]")
+print(f"Time to Expiry        : {tte}")
+print(f"Threshold for refresh : {config['refresh_threshold']}")
+print(f"Refresh needed        : {refresh_needed}")
+
+if refresh_needed:
+    exit(1)

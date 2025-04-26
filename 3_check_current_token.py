@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+"""
+Step 3 in the GitHub App Puppet Enterprise Token Authentication workflow
+
+Check the token for validity
+
+"""
+from ghpe_functions import *
+import json
+
+if check_sudo_needed():
+    print("Please use sudo to run this script.")
+    exit()
+
+config = load_config()
+
+token  = load_token(config)
+result = check_token_status(token, config)
+
+expiry = result.get('expires_at')
+
+print(f'Current Token File: {config['token_file']}')
+print(f'Current Token: {token}')
+print(f'Expiry: {expiry}')
+print('Token Status:')
+print(json.dumps(result, indent=4))
+
