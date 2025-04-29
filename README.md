@@ -10,6 +10,8 @@ Create a GitHub App for your organization, then use these scripts to manage the 
 1. Have your control repository available on GitHub and ensure it's part of your organization
 2. Create a "GitHub App" for authentication and attach it to your organization. Ensure the App has permissions to the specific (or all organization) repos.
 3. Create a `config.json` file based on the `example_config.json`. 
+4. Scripts will require `python3-lxml` libraries. On RedHat based systems, this can be installed using `dnf install -y python3-lxml`
+5. Target directory for token files configured in `config.json` needs to exist and be accessible by user `pe-puppet`
 
 # Process
 
@@ -30,3 +32,10 @@ Note:
 - If anything goes wrong, you can revoke all tokens used for the specific GitHub App and start again at step 1. 
 - For added security, you could also rotate the Client Secret on the same 3 month cycle. All steps will need to be performed after a Client Secret is rotated.
 
+Troubleshooting:
+- Beware of the error below, this means you need a new `PE API Access Token`, not a new GitHub access token. Get a new one with `puppet access login` command.
+```
+{"kind":"puppetlabs.rbac/token-revoked","msg":"Authentication token has been revoked."}
+2025/04/29 13:49:01 DEBUG - [POST /deploys][401] Deploy default  &{Details:<nil> Kind:puppetlabs.rbac/token-revoked Msg:Authentication token has been revoked.}
+2025/04/29 13:49:01 ERROR - [POST /deploys][401] Authentication token has been revoked.
+```
