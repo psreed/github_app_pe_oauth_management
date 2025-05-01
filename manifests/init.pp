@@ -57,7 +57,7 @@ class github_app_pe_oauth_management (
   Stdlib::Absolutepath $token_expiry_file    = '/etc/puppetlabs/github_oauth_token_expiry',
   Stdlib::Absolutepath $refresh_token_file   = '/etc/puppetlabs/github_oauth_refresh_token',
   Integer $refresh_threshold                 = 14400,
-  Stdlib::Absolutepath $web_root             = '/opt/puppetlabs/puppetserver/data/public/packages/',
+  Stdlib::Absolutepath $web_root             = '/opt/puppetlabs/puppetserver/data/public/packages',
   String[1] $callback_html                   = 'github_app_getcode.html',
   String[1] $get_code_html                   = 'github_app_callback.html',
   Stdlib::HTTPSUrl $get_code_uri             = "https://${facts['clientcert']}:8140/packages/github_app_get_code.html",
