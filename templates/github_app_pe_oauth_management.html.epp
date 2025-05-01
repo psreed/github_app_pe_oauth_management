@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>GitHub App OAuth Code</title>
+    <style>
+      body,h1,h2 { 
+        font-family: verdana; 
+        background: #000; 
+        color : #CCC; 
+      }
+      h1 { 
+        color: #AAA; 
+      }
+    </style>
+  </head>
+  <body>
+    <br />
+    <br />
+    <table align="center">
+      <tr>
+        <td align="center"><h2>Your GitHub code for token authentication is:</h2>
+      </tr>
+      <tr>
+        <td align="center"><h1><span id="code"></span> &nbsp;&nbsp; <button onclick="copyFunc()">Copy to Clipboard</button></h1></td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const code = urlParams.get('code');
+    document.getElementById('code').innerHTML = code;
+
+    function copyFunc() {
+    var copyText = document.getElementById("code").innerHTML;
+    navigator.clipboard.writeText(copyText);
+
+}
+</script>

@@ -37,6 +37,8 @@
 #   This is the scope used for the GitHub App Token request.
 # @param python_bin
 #   The location of the python3 binary to use for the scripts
+# @param callback_html
+#   The location to place the local callback html file. This should match the callback URI
 #
 class github_app_pe_oauth_management (
   Stdlib::Absolutepath $location             = '/opt/puppetlabs/github_app_pe_oauth_management',
@@ -49,9 +51,10 @@ class github_app_pe_oauth_management (
   Stdlib::Absolutepath $token_expiry_file    = '/etc/puppetlabs/github_oauth_token_expiry',
   Stdlib::Absolutepath $refresh_token_file   = '/etc/puppetlabs/github_oauth_refresh_token',
   Integer $refresh_threshold                 = 14400,
-  String[1] $callback_uri                    = 'https://127.0.0.1/callback',
+  String[1] $callback_uri                    = "https://${facts['clientcert']}:8140/packages/github_app_pe_oauth_management.html",
   String[1] $scope                           = 'repo',
   String[1] $python_bin                      = '/usr/bin/python3',
+  String[1] $callback_html                   = $callback_uri
 ) {
   #
   # Module defaults
@@ -116,6 +119,13 @@ class github_app_pe_oauth_management (
         }),
         *       => $script_permissions,
       }
+    }
+
+    #
+    # Callback HTML form to show code
+    #
+    file { $callback_html:
+      content => epp("${module_name}/github_app_pe_oauth_management.html.epp", {}),
     }
   }
 }
