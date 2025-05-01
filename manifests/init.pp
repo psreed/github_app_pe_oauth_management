@@ -35,6 +35,12 @@
 #   NOTE: This must be explicitly set to be the same as the configured Callback URL in the GitHub App itself.
 # @param callback_html
 #   The location to place the local callback html file. 
+# @param get_code_uri
+#   URL which the user will use to start the GitHub App authentication process.
+# @param get_code_html
+#   The location to place the local getcode html file. 
+# @param web_root
+#   Location to use for web form files. Must be accessible by pe-nginx service.
 # @param scope
 #   This is the scope used for the GitHub App Token request.
 # @param python_bin
@@ -51,8 +57,11 @@ class github_app_pe_oauth_management (
   Stdlib::Absolutepath $token_expiry_file    = '/etc/puppetlabs/github_oauth_token_expiry',
   Stdlib::Absolutepath $refresh_token_file   = '/etc/puppetlabs/github_oauth_refresh_token',
   Integer $refresh_threshold                 = 14400,
-  Stdlib::HTTPSUrl $callback_uri             = "https://${facts['clientcert']}:8140/packages/github_app_pe_oauth_management.html",
-  Stdlib::Absolutepath $callback_html        = '/opt/puppetlabs/puppetserver/data/public/packages/github_app_pe_oauth_management.html',
+  Stdlib::Absolutepath $web_root             = '/opt/puppetlabs/puppetserver/data/public/packages/',
+  Stdlib::Absolutepath $callback_html        = 'github_app_getcode.html',
+  Stdlib::Absolutepath $get_code_html         = 'github_app_callback.html', # lint:ignore:140chars
+  Stdlib::HTTPSUrl $get_code_uri              = "https://${facts['clientcert']}:8140/packages/github_app_get_code.html",
+  Stdlib::HTTPSUrl $callback_uri             = "https://${facts['clientcert']}:8140/packages/github_app_callback.html",
   String[1] $scope                           = 'repo',
   Stdlib::Absolutepath $python_bin           = '/usr/bin/python3',
 ) {
@@ -122,10 +131,19 @@ class github_app_pe_oauth_management (
     }
 
     #
-    # Callback HTML form to show code
+    # Get Code and Callback HTML forms to show code
     #
-    file { $callback_html:
-      content => epp("${module_name}/github_app_pe_oauth_management.html.epp", {}),
+    notice("GitHub App Homepage URL: ${get_code_uri}")
+    $query_string="client_id=${uriescape($github_client_id)}&redirect_uri=${uriescape($callback_uri)}&scope=${uriescape($scope)}&state=${seeded_rand_string(20, '', '0123456789abcdef')}" #lint:ignore:140chars
+    file { "${web_root}/${get_code_html}":
+      content => epp("${module_name}/github_app_get_code.html.epp", {
+          url => "${github_oauth_login_url}?${query_string}",
+      }),
+      mode    => '0644',
+    }
+    notice("GitHub App Callback URL: ${callback_uri}")
+    file { "${web_root}/${callback_html}":
+      content => epp("${module_name}/github_app_callback.html.epp", {}),
       mode    => '0644',
     }
   }
