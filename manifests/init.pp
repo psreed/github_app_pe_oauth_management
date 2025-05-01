@@ -59,7 +59,7 @@ class github_app_pe_oauth_management (
   Integer $refresh_threshold                 = 14400,
   Stdlib::Absolutepath $web_root             = '/opt/puppetlabs/puppetserver/data/public/packages/',
   String[1] $callback_html                   = 'github_app_getcode.html',
-  String[1] $get_code_html                   = 'github_app_callback.html', # lint:ignore:140chars
+  String[1] $get_code_html                   = 'github_app_callback.html',
   Stdlib::HTTPSUrl $get_code_uri             = "https://${facts['clientcert']}:8140/packages/github_app_get_code.html",
   Stdlib::HTTPSUrl $callback_uri             = "https://${facts['clientcert']}:8140/packages/github_app_callback.html",
   String[1] $scope                           = 'repo',
@@ -84,6 +84,7 @@ class github_app_pe_oauth_management (
   $directory_permissions = { mode  => '0750', }
   $config_permissions    = { mode  => '0640', }
   $script_permissions    = { mode  => '0750', }
+  $web_permissions       = { mode  => '0644', }
   #
   # Check pe_status_check and trusted fact to ensure we only apply onto a puppet/server
   #
@@ -139,12 +140,12 @@ class github_app_pe_oauth_management (
       content => epp("${module_name}/github_app_get_code.html.epp", {
           url => "${github_oauth_login_url}?${query_string}",
       }),
-      mode    => '0644',
+      *       => $web_permissions,
     }
     notice("GitHub App Callback URL: ${callback_uri}")
     file { "${web_root}/${callback_html}":
       content => epp("${module_name}/github_app_callback.html.epp", {}),
-      mode    => '0644',
+      *       => $web_permissions,
     }
   }
 }
