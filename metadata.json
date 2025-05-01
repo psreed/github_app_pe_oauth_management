@@ -2,11 +2,14 @@
   "name": "psreed-github_app_pe_oauth_management",
   "version": "0.1.0",
   "author": "Paul Reed",
-  "summary": "",
+  "summary": "Configures a set of scripts to manage workflow associated with GitHub App Tokens for Puppet Enterprise Code Manager.",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/psreed/github_app_pe_oauth_management",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 9.6.0 < 10.0.0"
+    }
   ],
   "operatingsystem_support": [
     {

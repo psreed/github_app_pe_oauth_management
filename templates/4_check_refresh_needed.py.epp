@@ -5,7 +5,11 @@ Step 4 in the GitHub App Puppet Enterprise Token Authentication workflow
 Check expiry time and see if we're within the needed threshold
 
 """
+import os
+os.chdir('<%= $location %>')
 from ghpe_functions import *
+config=load_config('<%= $config %>')
+
 import json
 import time
 import math
@@ -14,8 +18,6 @@ import datetime
 if check_sudo_needed():
     print("Please use sudo to run this script.")
     exit()
-
-config = load_config()
 
 current_time=math.trunc(time.time())
 

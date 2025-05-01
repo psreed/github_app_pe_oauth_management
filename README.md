@@ -1,8 +1,11 @@
 # github_app_pe_oauth_management
 
-A set of Bash and Python scripts to aid in the management of GitHub App authentication workflow for Puppet Enterprise.
 
-Create a GitHub App for your organization, then use these scripts to manage the authentication and refresh workflow for OAuth tokens used for Puppet Enterprise Code Manager.
+This module installs and configures a set of scripts designed to manage the workflow associated with the GitHub App Token process and connect with the Puppet Enterprise Code Manager service.
+
+This includes a set of Tasks and Python scripts to aid in the management of GitHub App authentication workflow.
+
+Create a GitHub App for your organization, then use this to manage the authentication and refresh workflow for OAuth tokens used for Puppet Enterprise Code Manager.
 
 
 # Setup

@@ -5,7 +5,11 @@ Step 5 in the GitHub App Puppet Enterprise Token Authentication workflow
 Refresh token before token has expired.
 
 """
+import os
+os.chdir('<%= $location %>')
 from ghpe_functions import *
+config=load_config('<%= $config %>')
+
 import json
 import time
 import math
@@ -13,8 +17,6 @@ import math
 if check_sudo_needed():
     print("Please use sudo to run this script.")
     exit()
-
-config = load_config()
 
 current_refresh_token = load_refresh_token(config)
 json_data = refresh_token(current_refresh_token, config)

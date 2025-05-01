@@ -4,15 +4,18 @@ Step 2 in the GitHub App Puppet Enterprise Token Authentication workflow
 
 Use the provided `code` to obtain a GitHub Access Token
 """
+import os
+os.chdir('<%= $location %>')
 from ghpe_functions import *
+config=load_config('<%= $config %>')
+
+
 import time
 import math
 
 if check_sudo_needed():
     print("Please use sudo to run this script.")
     exit()
-
-config = load_config()
 
 code = input('Input Code: ')
 

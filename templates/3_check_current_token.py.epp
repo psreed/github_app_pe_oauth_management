@@ -5,14 +5,16 @@ Step 3 in the GitHub App Puppet Enterprise Token Authentication workflow
 Check the token for validity
 
 """
+import os
+os.chdir('<%= $location %>')
 from ghpe_functions import *
+config=load_config('<%= $config %>')
+
 import json
 
 if check_sudo_needed():
     print("Please use sudo to run this script.")
     exit()
-
-config = load_config()
 
 token  = load_token(config)
 result = check_token_status(token, config)
