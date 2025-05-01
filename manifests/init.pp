@@ -52,7 +52,7 @@ class github_app_pe_oauth_management (
   Sensitive[String[1]] $github_client_id     = Sensitive('<GITHUB_CLIENT_ID>'),
   Sensitive[String[1]] $github_client_secret = Sensitive('<GITHUB_CLIENT_SECRET>'),
   Stdlib::HTTPSUrl $github_oauth_login_url   = 'https://github.com/login/oauth/authorize',
-  Stdlib::HTTPSUrl $github_token_url         = 'https://github.com/login/oauth/token',
+  Stdlib::HTTPSUrl $github_token_url         = 'https://github.com/login/oauth/access_token',
   Stdlib::Absolutepath $token_file           = '/etc/puppetlabs/github_oauth_token',
   Stdlib::Absolutepath $token_expiry_file    = '/etc/puppetlabs/github_oauth_token_expiry',
   Stdlib::Absolutepath $refresh_token_file   = '/etc/puppetlabs/github_oauth_refresh_token',
