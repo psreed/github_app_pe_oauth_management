@@ -126,6 +126,7 @@ class github_app_pe_oauth_management (
     #
     file { $callback_html:
       content => epp("${module_name}/github_app_pe_oauth_management.html.epp", {}),
+      mode    => '0644',
     }
   }
 }
