@@ -134,7 +134,9 @@ class github_app_pe_oauth_management (
     #
     # Get Code and Callback HTML forms to show code
     #
-    notice("GitHub App Homepage URL: ${get_code_uri}")
+    notify { 'github_app_hompage_url':
+      message => "GitHub App Homepage URL: ${get_code_uri}",
+    }
     $query_string="client_id=${github_app_pe_oauth_management::urlencode($github_client_id.unwrap)}&redirect_uri=${github_app_pe_oauth_management::urlencode($callback_uri)}&scope=${github_app_pe_oauth_management::urlencode($scope)}&state=${seeded_rand_string(20, '', '0123456789abcdef')}" #lint:ignore:140chars
     file { "${web_root}/${get_code_html}":
       content => epp("${module_name}/github_app_get_code.html.epp", {
@@ -142,7 +144,9 @@ class github_app_pe_oauth_management (
       }),
       *       => $web_permissions,
     }
-    notice("GitHub App Callback URL: ${callback_uri}")
+    notify { 'github_app_callback_url':
+      message => "GitHub App Callback URL: ${callback_uri}",
+    }
     file { "${web_root}/${callback_html}":
       content => epp("${module_name}/github_app_callback.html.epp", {}),
       *       => $web_permissions,
