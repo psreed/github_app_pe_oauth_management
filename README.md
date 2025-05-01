@@ -15,6 +15,8 @@ Create a GitHub App for your organization, then use this to manage the authentic
 
 **GitHub App Setting should be as follows:**
 
+NOTE: The Homepage and Callback URLs below should NOT be accessible from GitHub. They only need to be accessible from your browser within your own internal network for the workflow.
+
 *Basic Information*
 ```
 GitHub App Name: Puppet Enterprise - OAuth Token Integration
@@ -32,8 +34,6 @@ Enable Device Flow: [Checked]
 *Post Installation* - All options left blank and unchecked
 
 *Webhook* - All options left blank and unchecked
-
-NOTE: The Homepage and Callback URLs above do NOT have to be accessible from GitHub. They only need to be accessible from your browser within your own internal network.
 
 3\. Install the GitHub App into your organization in GitHub. Ensure both a Client secret and private key are generated.
 
