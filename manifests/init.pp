@@ -94,7 +94,7 @@ class github_app_pe_oauth_management (
           token_expiry_file      => $token_expiry_file,
           refresh_token_file     => $refresh_token_file,
           refresh_threshold      => $refresh_threshold,
-          callback_url           => $callback_uri,
+          callback_uri           => $callback_uri,
           scope                  => $scope,
       }),
       *       => $config_permissions,
