@@ -21,7 +21,7 @@ result = check_token_status(token, config)
 
 expiry = result.get('expires_at')
 
-print(f'Current Token File: {config['token_file']}')
+print(f'Current Token File: {config["token_file"]}')
 print(f'Current Token: {token}')
 print(f'Expiry: {expiry}')
 print('Token Status:')
