@@ -56,7 +56,6 @@ class github_app_pe_oauth_management (
   #
   # Module defaults
   #
-  $module_name = 'github_app_pe_oauth_management'
   $managed_scripts = [
     '1_get_github_app_code.py',
     '2_exchange_code_for_token.py',
