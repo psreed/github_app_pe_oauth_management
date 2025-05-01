@@ -1,6 +1,3 @@
-config.json
-testing/*
-__pycache__/*
 .git/
 .*.sw[op]
 .metadata
@@ -36,3 +33,19 @@ __pycache__/*
 .plan_cache.json
 .rerun.json
 bolt-debug.log
+/.fixtures.yml
+/Gemfile
+/.gitattributes
+/.github/
+/.gitignore
+/.pdkignore
+/.puppet-lint.rc
+/Rakefile
+/rakelib/
+/.rspec
+/..yml
+/.yardopts
+/spec/
+/.vscode/
+/.sync.yml
+/.devcontainer/
