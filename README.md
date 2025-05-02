@@ -15,7 +15,7 @@ Create a GitHub App for your organization, then use this to manage the authentic
 
 **GitHub App Setting should be as follows:**
 
-NOTE: The Homepage and Callback URLs below should NOT be accessible from GitHub. They only need to be accessible from your browser within your own internal network for the workflow.
+NOTE: The Homepage and Callback URLs below should NOT be accessible from GitHub. They only need to be accessible from your browser within your own internal network for the workflow to succeed.
 
 *Basic Information*
 ```

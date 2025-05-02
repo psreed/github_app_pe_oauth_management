@@ -41,6 +41,9 @@
 #   The location to place the local getcode html file. 
 # @param web_root
 #   Location to use for web form files. Must be accessible by pe-nginx service.
+# @param notify_urls
+#   If set to true, this will create a notify resource on every puppet run. Useful for initial configuration if you need to see the URLs,
+#   but should be turned off for regular operations.
 # @param scope
 #   This is the scope used for the GitHub App Token request.
 # @param python_bin
@@ -62,6 +65,7 @@ class github_app_pe_oauth_management (
   String[1] $get_code_html                   = 'github_app_get_code.html',
   Stdlib::HTTPSUrl $get_code_uri             = "https://${facts['clientcert']}:8140/packages/github_app_get_code.html",
   Stdlib::HTTPSUrl $callback_uri             = "https://${facts['clientcert']}:8140/packages/github_app_callback.html",
+  Boolean $notify_urls                       = false,
   String[1] $scope                           = 'repo',
   Stdlib::Absolutepath $python_bin           = '/usr/bin/python3',
 ) {
@@ -134,9 +138,6 @@ class github_app_pe_oauth_management (
     #
     # Get Code and Callback HTML forms to show code
     #
-    notify { 'github_app_hompage_url':
-      message => "GitHub App Homepage URL: ${get_code_uri}",
-    }
     $query_string="client_id=${github_app_pe_oauth_management::urlencode($github_client_id.unwrap)}&redirect_uri=${github_app_pe_oauth_management::urlencode($callback_uri)}&scope=${github_app_pe_oauth_management::urlencode($scope)}&state=${seeded_rand_string(20, '', '0123456789abcdef')}" #lint:ignore:140chars
     file { "${web_root}/${get_code_html}":
       content => epp("${module_name}/github_app_get_code.html.epp", {
@@ -144,12 +145,21 @@ class github_app_pe_oauth_management (
       }),
       *       => $web_permissions,
     }
-    notify { 'github_app_callback_url':
-      message => "GitHub App Callback URL: ${callback_uri}",
-    }
     file { "${web_root}/${callback_html}":
       content => epp("${module_name}/github_app_callback.html.epp", {}),
       *       => $web_permissions,
+    }
+
+    #
+    # Show URLs if notify_urls is enabled
+    #
+    if $notify_urls {
+      notify { 'github_app_hompage_url':
+        message => "GitHub App Homepage URL: ${get_code_uri}",
+      }
+      notify { 'github_app_callback_url':
+        message => "GitHub App Callback URL: ${callback_uri}",
+      }
     }
   }
 }
