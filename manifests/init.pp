@@ -92,7 +92,7 @@ class github_app_pe_oauth_management (
   #
   # Check pe_status_check and trusted fact to ensure we only apply onto a puppet/server
   #
-  if $trusted['extensions']['1.3.6.1.4.1.34380.1.1.9812']=='puppet/server' and $facts['pe_status_check_role']=='primary' {
+  if $facts['pe_status_check_role']=='primary' {
     #
     # Manage python package requirements
     #
