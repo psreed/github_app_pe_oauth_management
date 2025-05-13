@@ -26,5 +26,5 @@ Github(auth=auth)
 token = auth.token
 
 print(f"Saving new token to file: {token}")
-write_token_to_file(new_token, token)
+write_token_to_file(token, config['token_file'])
 
