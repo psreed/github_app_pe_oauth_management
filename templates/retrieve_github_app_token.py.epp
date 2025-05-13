@@ -10,7 +10,7 @@ os.chdir('<%= $location %>')
 from ghpe_functions import *
 config=load_config('<%= $config %>')
 
-with open(config['github_app_private_key'],'r') as pkf:
+with open(config['github_app_private_key_file'],'r') as pkf:
     private_key = pkf.read()
   
 appauth = Auth.AppAuth(config['github_client_id'], private_key)

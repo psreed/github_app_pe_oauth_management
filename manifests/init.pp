@@ -148,16 +148,17 @@ class github_app_pe_oauth_management (
     #
     file { $config:
       content => epp("${module_name}/config.json.epp", {
-          github_client_id       => $github_client_id,
-          github_client_secret   => $github_client_secret,
-          github_oauth_login_url => $github_oauth_login_url,
-          github_token_url       => $github_token_url,
-          token_file             => $token_file,
-          token_expiry_file      => $token_expiry_file,
-          refresh_token_file     => $refresh_token_file,
-          refresh_threshold      => $refresh_threshold,
-          callback_uri           => $callback_uri,
-          scope                  => $scope,
+          github_client_id            => $github_client_id,
+          github_client_secret        => $github_client_secret,
+          github_app_private_key_file => $github_app_private_key_file,
+          github_oauth_login_url      => $github_oauth_login_url,
+          github_token_url            => $github_token_url,
+          token_file                  => $token_file,
+          token_expiry_file           => $token_expiry_file,
+          refresh_token_file          => $refresh_token_file,
+          refresh_threshold           => $refresh_threshold,
+          callback_uri                => $callback_uri,
+          scope                       => $scope,
       }),
       *       => $config_permissions,
     }
