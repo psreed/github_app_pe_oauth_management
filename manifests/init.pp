@@ -171,6 +171,10 @@ class github_app_pe_oauth_management (
         content => $github_app_private_key,
         *       => $config_permissions,
       }
+      #
+      # Python module requirements for Private Key method
+      #
+      ensure_resource('package','PyGithub', { ensure => present, provider => 'pip', })
     }
 
     #
