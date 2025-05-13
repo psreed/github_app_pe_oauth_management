@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+import base64
+import github
+import json
+import os
+from github import Github, Auth, GithubIntegration
+
+os.chdir('<%= $location %>')
+from ghpe_functions import *
+config=load_config('<%= $config %>')
+
+with open(config['github_app_private_key'],'r') as pkf:
+    private_key = pkf.read()
+  
+appauth = Auth.AppAuth(config['github_client_id'], private_key)
+
+gi = GithubIntegration(auth=appauth)
+
+id = gi.get_installations()[0].id
+
+auth = appauth.get_installation_auth(id)
+
+Github(auth=auth)
+
+token = auth.token
+
+print(f"Saving new token to file: {token}")
+write_token_to_file(new_token, token)
+
